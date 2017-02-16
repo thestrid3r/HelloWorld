@@ -9,7 +9,7 @@ docker-compose up --build -d
 docker-compose up --build
 ```
 
-*dockerhub image
+* dockerhub image
 ```
 https://hub.docker.com/r/thestrider/helloworld/
 ```
