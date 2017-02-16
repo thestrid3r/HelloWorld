@@ -1,6 +1,6 @@
 # README #
 
-* A python web server running in docker using redis to count the view 
+* A Flask web server running in docker using redis to count the view 
 
 * To build and run the server use:
 ```
