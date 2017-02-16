@@ -2,7 +2,9 @@
 
 * A python web server running in docker using redis to count the view 
 
-* to build and run the server use:
+* To build and run the server use:
+```
 docker-compose up --build -d
         or
 docker-compose up --build
+```
