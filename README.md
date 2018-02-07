@@ -13,3 +13,8 @@ docker-compose up --build
 ```
 https://hub.docker.com/r/thestrider/helloworld/
 ```
+* To get the aws-region use this
+
+```
+curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/\(.*\)[a-z]/\1/'
+```
