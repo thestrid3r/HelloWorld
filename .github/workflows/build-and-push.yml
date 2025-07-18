@@ -1,4 +1,4 @@
-name: Secure Build and Push
+name: Build and Push
 
 on:
   push:
@@ -7,13 +7,14 @@ on:
 env:
   IMAGE_NAME: helloworld
 
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
   build-push-secure:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      id-token: write # Required for cosign signing with GitHub OIDC
 
     steps:
       - name: Checkout code
@@ -33,7 +34,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Log in to GHCR
+      - name: Log in to GitHub Container Registry (GHCR)
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -51,7 +52,7 @@ jobs:
             docker.io/thestrider/${{ env.IMAGE_NAME }}:latest
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
             ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
-          provenance: true # Enables SLSA + SBOM
+          provenance: true
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@master
@@ -68,10 +69,12 @@ jobs:
           image: docker.io/thestrider/${{ env.IMAGE_NAME }}:${{ env.TAG }}
           output-file: sbom.spdx.json
 
-      - name: Sign image with Cosign (GitHub OIDC)
+      - name: Install Cosign
         uses: sigstore/cosign-installer@v3
-      - name: Cosign sign
+
+      - name: Sign image with Cosign
         run: |
           cosign sign --yes docker.io/thestrider/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          cosign sign --yes ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
         env:
           COSIGN_EXPERIMENTAL: "1"
