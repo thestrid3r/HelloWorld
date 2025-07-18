@@ -1,34 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <style type ="text/css" >
-   .footer{
-       position: fixed;
-       text-align: center;
-       bottom: 0px;
-       width: 100%;
-   }
-   body {
-   background-color: #DBF9FC;
-<!--   background-image: url('background-image.jpg');-->
-   }
-   h1   {
-<!--   color: blue;-->
-   font-family: Optima;
-   }
-   h2 {
-   font-family: Luminari;
-   }
-   </style>
-    <div class="bd-example" align="middle">
-    <title>Yo!</title>
+  <meta charset="UTF-8">
+  <title>Cosmic Terminal</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: black;
+      color: #39ff14;
+      font-family: "Lucida Console", Monaco, monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
 
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+      z-index: 2;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin: 0.3rem 0;
+      color: #39ff14;
+      z-index: 2;
+    }
+
+    .quote {
+      margin-top: 1.5rem;
+      font-style: italic;
+      font-size: 1rem;
+      color: #00cccc;
+      z-index: 2;
+    }
+
+    code {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      font-size: 0.9rem;
+      color: #00cccc;
+      z-index: 2;
+    }
+
+    .footer a {
+      color: #39c0ed;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Starfield animation */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .stars div {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+  </style>
 </head>
-<body >
-    <h1>Yo!</h1>
-    <h2>Welcome to FlaskApp!</h2>
-    <h2> I have been seen {{hits}} times, and my hostname is {{hostname}}. </h2>
-    <div class="footer"><a href="https://github.com/thestrid3r/HelloWorld">About</a></div>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <h1>{{ title }}</h1>
+  <h2>This tiny cosmic app has been visited {{ hits }} times</h2>
+  <h2>Currently orbiting host: <code>{{ hostname }}</code></h2>
+
+  <div class="quote">{{ quote }}</div>
+
+  <div class="footer">
+    🪐 Source: <a href="https://github.com/thestrid3r/HelloWorld">GitHub</a>
+  </div>
+
+  <!-- JS for starfield -->
+  <script>
+    const starField = document.getElementById("stars");
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${1 + Math.random() * 2}s`;
+      starField.appendChild(star);
+    }
+  </script>
+
+  <!-- JS for keyboard typing sound -->
+  <script>
+    const clickSound = new Audio("https://www.soundjay.com/button/sounds/button-29.mp3");
+    document.addEventListener("keydown", () => {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    });
+  </script>
+
 </body>
 </html>
