@@ -1,0 +1,37 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Logs and local output
+*.log
+*.tmp
+
+# Python virtual environments
+venv/
+.env/
+*.env
+
+# Git
+.git/
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+
+# Editor configs
+.vscode/
+.idea/
+
+# Optional: ignore markdown/docs
+README.md
